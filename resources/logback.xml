@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="com.github.dpoggi.logback.ext.encoder.ConsolePatternLayoutEncoder"/>
+  </appender>
+
+  <appender name="CONSOLE_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="CONSOLE"/>
+    <queueSize>512</queueSize>
+    <discardingThreshold>0</discardingThreshold>
+    <neverBlock>true</neverBlock>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>logs/jetty.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>logs/jetty-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+       <maxFileSize>100MB</maxFileSize>
+       <maxHistory>10</maxHistory>
+       <totalSizeCap>2GB</totalSizeCap>
+    </rollingPolicy>
+    <encoder class="com.github.dpoggi.logback.ext.encoder.FilePatternLayoutEncoder"/>
+  </appender>
+
+  <appender name="FILE_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="FILE"/>
+    <queueSize>512</queueSize>
+    <discardingThreshold>0</discardingThreshold>
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE_ASYNC"/>
+    <appender-ref ref="FILE_ASYNC"/>
+  </root>
+
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+    <resetJUL>true</resetJUL>
+  </contextListener>
+</configuration>

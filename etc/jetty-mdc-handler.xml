@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_3.dtd">
+<!-- =============================================================== -->
+<!-- Configure the Jetty SLF4J/MDC Handler                           -->
+<!-- =============================================================== -->
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+  <Get id="oldHandler" name="handler"/>
+
+  <Set name="handler">
+    <New id="mdcHandler" class="org.eclipse.jetty.webapp.logging.ContextLogHandler">
+      <Set name="handler"><Ref refid="oldHandler"/></Set>
+    </New>
+  </Set>
+</Configure>
